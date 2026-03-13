@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     }
 
     const elevenLabsForm = new FormData();
-    elevenLabsForm.append("audio", file);
+    elevenLabsForm.append("file", file);
     elevenLabsForm.append("model_id", "scribe_v1");
 
     const response = await fetch(

@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     }
 
     const sttForm = new FormData();
-    sttForm.append("audio", file);
+    sttForm.append("file", file);
     sttForm.append("model_id", "scribe_v1");
 
     const sttResponse = await fetch(
