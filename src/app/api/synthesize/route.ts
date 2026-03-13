@@ -1,12 +1,27 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-const VOICE_MAP: Record<string, string> = {
-  ko: "jBpfAFnaylXS5xSIHfVj",
-  en: "21m00Tcm4TlvDq8ikWAM",
-  ja: "jBpfAFnaylXS5xSIHfVj",
-  "zh-CN": "jBpfAFnaylXS5xSIHfVj",
-  es: "jBpfAFnaylXS5xSIHfVj",
+const getAvailableVoiceId = async (apiKey: string): Promise<string> => {
+  const response = await fetch("https://api.elevenlabs.io/v1/voices", {
+    headers: { "xi-api-key": apiKey },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch voices");
+  }
+
+  const data = await response.json();
+  const voices = data.voices as Array<{ voice_id: string; category: string }>;
+
+  const clonedVoice = voices.find((v) => v.category === "cloned");
+  if (clonedVoice) return clonedVoice.voice_id;
+
+  const generatedVoice = voices.find((v) => v.category === "generated");
+  if (generatedVoice) return generatedVoice.voice_id;
+
+  if (voices.length > 0) return voices[0].voice_id;
+
+  throw new Error("No voices available");
 };
 
 export async function POST(req: NextRequest) {
@@ -25,7 +40,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const voiceId = VOICE_MAP[targetLanguage] || VOICE_MAP["en"];
+    const voiceId = await getAvailableVoiceId(process.env.ELEVENLABS_API_KEY!);
 
     const response = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
