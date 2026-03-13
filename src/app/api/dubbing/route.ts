@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
 import translate from "google-translate-api-x";
+import { type NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 
-// ElevenLabs 다국어 음성 ID (기본 multilingual voice)
+export const maxDuration = 60;
+
 const DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
 
 export async function POST(req: NextRequest) {
@@ -23,7 +24,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Step 1: 음성 전사 (ElevenLabs STT)
     const sttForm = new FormData();
     sttForm.append("audio", file);
     sttForm.append("model_id", "scribe_v1");
@@ -51,13 +51,11 @@ export async function POST(req: NextRequest) {
     const sttData = await sttResponse.json();
     const originalText = sttData.text;
 
-    // Step 2: 번역 (google-translate-api-x)
     const translateResult = (await translate(originalText, {
       to: targetLanguage,
     })) as { text: string };
     const translatedText = translateResult.text;
 
-    // Step 3: 음성 합성 (ElevenLabs TTS)
     const ttsResponse = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${DEFAULT_VOICE_ID}`,
       {
