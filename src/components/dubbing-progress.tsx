@@ -43,20 +43,24 @@ export default function DubbingProgress({
   if (step === "idle") {return null;}
 
   return (
-    <Card>
+    <Card aria-live="polite" aria-atomic="true" role="status">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <span>{current.icon}</span>
+          <span aria-hidden="true">{current.icon}</span>
           {current.label}
         </CardTitle>
       </CardHeader>
       <CardContent>
         {step === "error" ? (
-          <p className="text-sm text-destructive">
+          <p className="text-sm text-destructive" role="alert">
             {error || "알 수 없는 오류가 발생했습니다."}
           </p>
         ) : (
-          <Progress value={current.progress} className="h-2" />
+          <Progress
+            value={current.progress}
+            className="h-2"
+            aria-label={`더빙 진행률 ${current.progress}%`}
+          />
         )}
       </CardContent>
     </Card>
