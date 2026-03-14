@@ -50,7 +50,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
+            <Button className="cursor-pointer" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>
               Google로 로그인
             </Button>
           )}

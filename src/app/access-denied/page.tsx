@@ -31,7 +31,7 @@ export default function AccessDeniedPage() {
               서비스 이용을 원하시면 관리자에게 이메일 등록을 요청해주세요.
             </p>
             <Link href="/">
-              <Button variant="outline">홈으로 돌아가기</Button>
+              <Button variant="outline" className="cursor-pointer">홈으로 돌아가기</Button>
             </Link>
           </CardContent>
         </Card>

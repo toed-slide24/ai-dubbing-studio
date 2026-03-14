@@ -130,12 +130,12 @@ export default function DashboardPage() {
                 !targetLanguage ||
                 (step !== "idle" && step !== "complete" && step !== "error")
               }
-              className="flex-1"
+              className="flex-1 cursor-pointer disabled:cursor-not-allowed"
             >
               🎙️ 더빙 시작
             </Button>
             {(step === "complete" || step === "error") && (
-              <Button size="lg" variant="outline" onClick={handleReset}>
+              <Button size="lg" variant="outline" onClick={handleReset} className="cursor-pointer">
                 🔄 다시 시작
               </Button>
             )}

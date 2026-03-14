@@ -50,6 +50,7 @@ export default function Home() {
           <div className="mt-10 flex justify-center gap-4">
             <Button
               size="lg"
+              className="cursor-pointer"
               onClick={() =>
                 signIn("google", { callbackUrl: "/dashboard" })
               }
