@@ -9,7 +9,7 @@
 
 🔗 **배포 URL**: [https://ai-dubbing-studio.vercel.app](https://ai-dubbing-studio.vercel.app/)
 
-ESTsoft Perso AI DevRel 인턴 채용 과제로 제작한 AI 더빙 웹 서비스입니다.
+AI 더빙 웹 서비스입니다.
 ElevenLabs의 음성 AI 기술과 다국어 번역을 결합하여, **파일 업로드 한 번으로 STT → 번역 → TTS 파이프라인**을 자동으로 처리합니다.
 
 ---
