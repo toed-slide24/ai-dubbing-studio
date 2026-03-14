@@ -61,10 +61,9 @@ export async function POST(req: NextRequest) {
     );
 
     if (!sttResponse.ok) {
-      const error = await sttResponse.text();
-      console.error("STT error:", error);
+      console.error("STT error:", await sttResponse.text());
       return NextResponse.json(
-        { error: `Transcription failed (${sttResponse.status}): ${error}`, step: "transcribe" },
+        { error: "Transcription failed", step: "transcribe" },
         { status: 500 }
       );
     }
@@ -99,10 +98,9 @@ export async function POST(req: NextRequest) {
     );
 
     if (!ttsResponse.ok) {
-      const error = await ttsResponse.text();
-      console.error("TTS error:", error);
+      console.error("TTS error:", await ttsResponse.text());
       return NextResponse.json(
-        { error: `TTS failed (${ttsResponse.status}): ${error}`, step: "synthesize" },
+        { error: "Speech synthesis failed", step: "synthesize" },
         { status: 500 }
       );
     }
