@@ -77,12 +77,24 @@ export default function AudioPlayer({
             onEnded={() => setIsPlaying(false)}
             className="w-full"
             controls
+            aria-label="더빙된 오디오"
           />
           <div className="flex gap-2">
-            <Button onClick={handlePlayPause} variant="outline" size="sm">
+            <Button
+              onClick={handlePlayPause}
+              variant="outline"
+              size="sm"
+              className="cursor-pointer"
+              aria-label={isPlaying ? "오디오 일시정지" : "오디오 재생"}
+            >
               {isPlaying ? "⏸ 일시정지" : "▶ 재생"}
             </Button>
-            <Button onClick={handleDownload} size="sm">
+            <Button
+              onClick={handleDownload}
+              size="sm"
+              className="cursor-pointer"
+              aria-label="더빙된 오디오 다운로드"
+            >
               📥 다운로드
             </Button>
           </div>
