@@ -1,8 +1,7 @@
 import translate from "google-translate-api-x";
 import { type NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-
-const SUPPORTED_LANGUAGES = ["ko", "en", "ja", "zh-CN", "es"] as const;
+import { SUPPORTED_LANGUAGE_CODES } from "@/lib/constants";
 
 export async function POST(req: NextRequest) {
   const session = await auth();
@@ -21,8 +20,8 @@ export async function POST(req: NextRequest) {
     }
 
     if (
-      !SUPPORTED_LANGUAGES.includes(
-        targetLanguage as (typeof SUPPORTED_LANGUAGES)[number]
+      !SUPPORTED_LANGUAGE_CODES.includes(
+        targetLanguage as (typeof SUPPORTED_LANGUAGE_CODES)[number]
       )
     ) {
       return NextResponse.json(
