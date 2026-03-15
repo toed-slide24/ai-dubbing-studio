@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { LANGUAGE_NAMES } from "@/lib/constants";
 
 interface AudioPlayerProps {
   audioBase64: string;
@@ -19,14 +20,6 @@ interface AudioPlayerProps {
   sourceLanguage: string;
   targetLanguage: string;
 }
-
-const LANGUAGE_NAMES: Record<string, string> = {
-  ko: "한국어",
-  en: "English",
-  ja: "日本語",
-  "zh-CN": "中文",
-  es: "Español",
-};
 
 export default function AudioPlayer({
   audioBase64,
