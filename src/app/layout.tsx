@@ -41,6 +41,14 @@ export const metadata: Metadata = {
     url: BASE_URL,
     siteName: "AI Dubbing Studio",
     locale: "ko_KR",
+    images: [
+      {
+        url: "/OG_image.png",
+        width: 1200,
+        height: 630,
+        alt: "AI Dubbing Studio",
+      },
+    ],
   },
   icons: {
     icon: [
