@@ -7,6 +7,7 @@ import DubbingProgress, { type DubbingStep } from "@/components/dubbing-progress
 import FileUpload from "@/components/file-upload";
 import Header from "@/components/header";
 import LanguageSelect from "@/components/language-select";
+import { extractAudio } from "@/lib/extract-audio";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -37,8 +38,9 @@ export default function DashboardPage() {
 
     try {
       setStep("uploading");
+      const audioFile = await extractAudio(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", audioFile);
       formData.append("targetLanguage", targetLanguage);
 
       setStep("transcribing");
@@ -48,8 +50,18 @@ export default function DashboardPage() {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "더빙 처리 중 오류가 발생했습니다.");
+        let errorMessage = "더빙 처리 중 오류가 발생했습니다.";
+        try {
+          const data = await response.json();
+          errorMessage = data.error || errorMessage;
+        } catch {
+          if (response.status === 413) {
+            errorMessage = "파일이 너무 큽니다. 더 작은 파일을 사용해주세요.";
+          } else {
+            errorMessage = `서버 오류가 발생했습니다. (${response.status})`;
+          }
+        }
+        throw new Error(errorMessage);
       }
 
       setStep("translating");
